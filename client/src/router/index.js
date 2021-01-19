@@ -12,7 +12,7 @@ const routes = [
     children:[
       {
         path:'',
-        component: () => import(/* webpackChunkName: "a" */ '../views/a.vue')
+        component: () => import(/* webpackChunkName: "entering" */ '../views/entering.vue')
       },
       {
         path:'/b',

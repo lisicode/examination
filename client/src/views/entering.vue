@@ -1,5 +1,5 @@
 <template>
-  <div class="a">
+  <div class="entering">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item>
         <el-input v-model="formInline.user" placeholder="姓名"></el-input>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'a',
+  name: 'entering',
   data() {
     return {
       formInline: {
@@ -32,7 +32,20 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.formInline);
+      this.axios({
+        url: '/api',
+        method: 'POST',
+        data: {
+          demo: '2',
+        }
+      }).then( res => {
+        console.info(res)
+      }).catch( e => {
+        console.info(e)
+      })
+
+
+
     }
   }
 }
