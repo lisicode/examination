@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { Request, InterfaceCode } from '@/assets/js/config'
+
 export default {
   name: 'entering',
   data() {
@@ -32,16 +34,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.axios({
-        url: '/api',
-        method: 'POST',
+      Request({
+        method: 'post',
         data: {
-          demo: '2',
+          code: InterfaceCode.UserLogin,
+          demo: 1
         }
-      }).then( res => {
-        console.info(res)
-      }).catch( e => {
-        console.info(e)
+      }).then(res => {
+        console.log(res)
       })
 
 

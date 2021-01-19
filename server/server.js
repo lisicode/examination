@@ -3,7 +3,7 @@ const http = require('http');
 http.createServer(function (req, res) {
     req.on('data', function (data) {
         var str = data.toString();
-        console.log(JSON.parse(str))
+        console.log(JSON.parse(str).code)
 
         req.on('end', function () {
             let sendData = {
