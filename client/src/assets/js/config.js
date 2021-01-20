@@ -6,14 +6,13 @@ const EnvironmentConfig = {
         url: '/api',
     },
     'PROD': {
-        type: 'prod',
         url: '',
     }
 };
 
 // 接口编号
-const InterfaceCode = {
-    UserLogin: '00B301',
+const ApiConfig = {
+    signUp: 'S001',
 };
 
 // 环境定义
@@ -39,4 +38,4 @@ Request.interceptors.response.use(response => {
     console.log(error)
 });
 
-export { InterfaceCode, Request, Environment }
+export { ApiConfig, Request }

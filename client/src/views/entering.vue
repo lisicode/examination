@@ -1,13 +1,14 @@
 <template>
   <div class="entering">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form :inline="true" :model="userData" class="demo-form-inline">
       <el-form-item>
-        <el-input v-model="formInline.user" placeholder="姓名"></el-input>
+        <el-input v-model="userData.name" placeholder="姓名"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="formInline.region" placeholder="部门">
-          <el-option label="客服中心" value="a"></el-option>
-        </el-select>
+        <el-input v-model="userData.department" placeholder="部门"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="userData.phone" placeholder="电话"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">录入</el-button>
@@ -23,9 +24,10 @@ export default {
   name: 'entering',
   data() {
     return {
-      formInline: {
-        user: '',
-        region: ''
+      userData: {
+        name: '',
+        department: '',
+        phone: ''
       }
     }
   },
