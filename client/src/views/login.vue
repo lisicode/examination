@@ -38,59 +38,59 @@
 </template>
 
 <script>
-  import { Request, ApiConfig } from '@/assets/js/config'
+import { Request, ApiConfig } from '@/assets/js/config'
 
-  export default {
-    name: 'login',
-    data() {
-      return {
-        signInData: {
-          account: '',
-          password: ''
-        },
-        signUpData: {
-          account: '',
-          password: '',
-          department: '',
-          role: ''
-        },
-        rules: {
-          account: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
-          ],
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-          ],
-          department: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
-          ],
-          role: [
-            { required: true, message: '请选择角色', trigger: 'change' }
-          ],
-        }
-      }
-    },
-    mounted() {
-
-    },
-    methods: {
-      signUp(signUpData) {
-        this.$refs[signUpData].validate((valid) => {
-          if (valid) {
-            Request({
-              method: 'post',
-              data: {
-                api: ApiConfig.signUp,
-                signUpData: this.signUpData
-              }
-            }).then(res => {
-              console.log(res)
-            })
-          } else {
-            return false;
-          }
-        });
+export default {
+  name: 'login',
+  data() {
+    return {
+      signInData: {
+        account: '',
+        password: ''
       },
+      signUpData: {
+        account: '',
+        password: '',
+        department: '',
+        role: ''
+      },
+      rules: {
+        account: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+        ],
+        department: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ],
+        role: [
+          { required: true, message: '请选择角色', trigger: 'change' }
+        ],
+      }
     }
+  },
+  mounted() {
+
+  },
+  methods: {
+    signUp(signUpData) {
+      this.$refs[signUpData].validate((valid) => {
+        if (valid) {
+          Request({
+            method: 'post',
+            data: {
+              api: ApiConfig.signUp,
+              signUpData: this.signUpData
+            }
+          }).then(res => {
+            console.log(res)
+          })
+        } else {
+          return false;
+        }
+      });
+    },
   }
+}
 </script>
