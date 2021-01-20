@@ -12,26 +12,26 @@
       </el-form-item>
     </el-form>
 
-    <el-form :model="signUpData">
-      <el-form-item>
+    <el-form :model="signUpData" status-icon :rules="rules" ref="signUpData">
+      <el-form-item prop="account">
         <el-input v-model="signUpData.account" placeholder="请输入账号"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <el-input v-model="signUpData.password" placeholder="请输入密码" show-password></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="department">
         <el-select v-model="signUpData.department" placeholder="请选择部门">
           <el-option label="互联网金融业务部" value="01"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="role">
         <el-select v-model="signUpData.role" placeholder="请选择角色">
           <el-option label="考官" value="01"></el-option>
           <el-option label="考生" value="02"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="signUp">提交</el-button>
+        <el-button type="primary" @click="signUp('signUpData')">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -48,12 +48,25 @@ export default {
         account: '',
         password: ''
       },
-
       signUpData: {
         account: '',
         password: '',
         department: '',
         role: ''
+      },
+      rules: {
+        account: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+        ],
+        department: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ],
+        role: [
+          { required: true, message: '请选择角色', trigger: 'change' }
+        ],
       }
     }
   },
@@ -61,18 +74,23 @@ export default {
 
   },
   methods: {
-    signUp() {
-      Request({
-        method: 'post',
-        data: {
-          api: ApiConfig.signUp,
-          signUpData: this.signUpData
+    signUp(signUpData) {
+      this.$refs[signUpData].validate((valid) => {
+        if (valid) {
+          Request({
+            method: 'post',
+            data: {
+              api: ApiConfig.signUp,
+              signUpData: this.signUpData
+            }
+          }).then(res => {
+            console.log(res)
+          })
+        } else {
+          return false;
         }
-      }).then(res => {
-        console.log(res)
-      })
-    }
-
+      });
+    },
   }
 }
 </script>
