@@ -1,5 +1,6 @@
 const http = require('http');
 const mysql = require('mysql');
+const crypto = require('crypto');
 
 const connection = () => {
     let config = mysql.createConnection({
@@ -26,10 +27,11 @@ const connection = () => {
 http.createServer((req, res) => {
     req.on('data', (e) => {
         let data = JSON.parse(e.toString());
+        let queryUser = `SELECT * FROM user WHERE account LIKE ${data.signUpData.account}`;
+        let registeredUser = `INSERT INTO user(account, password, department, role) VALUES ('${data.signUpData.account}', '${data.signUpData.password}', '${data.signUpData.department}', '${data.signUpData.role}')`;
+
         switch (data.api) {
             case 'S001':
-                let queryUser = `SELECT * FROM user WHERE account LIKE ${data.signUpData.account}`;
-                let registeredUser = `INSERT INTO user(account, password, department, role) VALUES ('${data.signUpData.account}', '${data.signUpData.password}', '${data.signUpData.department}', '${data.signUpData.role}')`;
                 connection().query(queryUser, (err, result) => {
                     if (err) {
                         console.log('[SELECT ERROR] - ',err.message);
