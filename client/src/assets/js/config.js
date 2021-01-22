@@ -13,6 +13,7 @@ const EnvironmentConfig = {
 // 接口编号
 const ApiConfig = {
     signUp: 'S001',
+    signIn: 'S002',
 };
 
 // 环境定义

@@ -1,18 +1,21 @@
 <template>
   <div class="login">
-    <el-form :model="signInData">
-      <el-form-item>
+    <el-form :model="signInData" status-icon :rules="rules" ref="signInData">
+      <el-form-item prop="account">
         <el-input v-model="signInData.account" placeholder="请输入账号"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <el-input v-model="signInData.password" placeholder="请输入密码" show-password></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">登录</el-button>
+        <el-button type="primary" @click="signIn('signInData')">登录</el-button>
       </el-form-item>
     </el-form>
 
     <el-form :model="signUpData" status-icon :rules="rules" ref="signUpData">
+      <el-form-item prop="name">
+        <el-input v-model="signUpData.name" placeholder="请输入姓名"></el-input>
+      </el-form-item>
       <el-form-item prop="account">
         <el-input v-model="signUpData.account" placeholder="请输入账号"></el-input>
       </el-form-item>
@@ -49,12 +52,16 @@ export default {
         password: ''
       },
       signUpData: {
+        name: '',
         account: '',
         password: '',
         department: '',
         role: ''
       },
       rules: {
+        name: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+        ],
         account: [
           { required: true, message: '请输入账号', trigger: 'blur' },
         ],
@@ -82,6 +89,24 @@ export default {
             data: {
               api: ApiConfig.signUp,
               signUpData: this.signUpData
+            }
+          }).then(res => {
+            console.log(res)
+
+          })
+        } else {
+          return false;
+        }
+      });
+    },
+    signIn(signInData) {
+      this.$refs[signInData].validate((valid) => {
+        if (valid) {
+          Request({
+            method: 'post',
+            data: {
+              api: ApiConfig.signIn,
+              signInData: this.signInData
             }
           }).then(res => {
             console.log(res)
