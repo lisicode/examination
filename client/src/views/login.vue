@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { Request, ApiConfig } from '@/assets/js/config'
+import { Request, ApiConfig, SetLocalStorage, GetLocalStorage } from '@/assets/js/config'
 
 export default {
   name: 'login',
@@ -91,8 +91,14 @@ export default {
               signUpData: this.signUpData
             }
           }).then(res => {
-            console.log(res)
-
+            if (res.status === '0000') {
+              SetLocalStorage(res.userData, 'userData');
+              if (res.userData.role === '01') {
+                this.$router.push('/examiner')
+              } else if (res.userData.role === '02') {
+                this.$router.push('/home')
+              }
+            }
           })
         } else {
           return false;
@@ -109,8 +115,14 @@ export default {
               signInData: this.signInData
             }
           }).then(res => {
-            console.log(res)
-
+              if (res.status === '0000') {
+                SetLocalStorage(res.userData, 'userData');
+                if (res.userData.role === '01') {
+                  this.$router.push('/examiner')
+                } else if (res.userData.role === '02') {
+                  this.$router.push('/')
+                }
+              }
           })
         } else {
           return false;

@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
+  <div class="examiner">
     <el-container>
       <el-header>
         <el-menu :default-active="$route.path" mode="horizontal" :router='true'>
-          <el-menu-item index="/home">考生录入</el-menu-item>
-          <el-menu-item index="/b">试卷配置</el-menu-item>
+          <el-menu-item index="/examiner">试卷配置</el-menu-item>
+          <el-menu-item index="/statistics">成绩统计</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -15,12 +15,16 @@
 </template>
 
 <script>
+import { Request, ApiConfig, SetLocalStorage, GetLocalStorage } from '@/assets/js/config'
 export default {
-  name: 'home',
+  name: 'examiner',
   data() {
     return {
       activeIndex: '/'
     };
+  },
+  created() {
+
   },
   mounted() {
 

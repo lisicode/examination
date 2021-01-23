@@ -38,6 +38,7 @@ http.createServer((req, res) => {
                     } else {
                         if (result.length) {
                             let sendData = {
+                                status: '0002',
                                 msg: '此用户已注册，请直接登录'
                             };
                             res.end(JSON.stringify(sendData));
@@ -46,13 +47,20 @@ http.createServer((req, res) => {
                                 if (err) {
                                     console.log('[SELECT ERROR] - ',err.message);
                                     let sendData = {
+                                        status: '0001',
                                         msg: '注册失败'
                                     };
                                     res.end(JSON.stringify(sendData));
                                     return false;
                                 } else {
                                     let sendData = {
-                                        msg: '注册成功'
+                                        status: '0000',
+                                        msg: '注册成功',
+                                        userData: {
+                                            name: data.signUpData.name,
+                                            account: data.signUpData.account,
+                                            role: data.signUpData.role
+                                        }
                                     };
                                     res.end(JSON.stringify(sendData));
                                 }
@@ -72,17 +80,25 @@ http.createServer((req, res) => {
                         if (result.length) {
                             if (result[0].password === md5(data.signInData.password)) {
                                 let sendData = {
-                                    msg: '登录成功'
+                                    status: '0000',
+                                    msg: '登录成功',
+                                    userData: {
+                                        name: result[0].name,
+                                        account: result[0].account,
+                                        role: result[0].role
+                                    }
                                 };
                                 res.end(JSON.stringify(sendData));
                             } else {
                                 let sendData = {
+                                    status: '0001',
                                     msg: '密码错误'
                                 };
                                 res.end(JSON.stringify(sendData));
                             }
                         } else {
                             let sendData = {
+                                status: '0002',
                                 msg: '此用户还没有注册'
                             };
                             res.end(JSON.stringify(sendData));

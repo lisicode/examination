@@ -19,6 +19,15 @@ const ApiConfig = {
 // 环境定义
 const Environment = EnvironmentConfig['UAT'];
 
+// 公共方法
+const SetLocalStorage = (data, name) => {
+    data = JSON.stringify(data);
+    localStorage.setItem(name, data);
+};
+
+const GetLocalStorage = (name) => {
+    return JSON.parse(localStorage.getItem(name));
+};
 
 // 创建请求实例
 const Request = axios.create({
@@ -39,4 +48,4 @@ Request.interceptors.response.use(response => {
     console.log(error)
 });
 
-export { ApiConfig, Request }
+export { ApiConfig, Request, SetLocalStorage, GetLocalStorage }
