@@ -14,6 +14,8 @@ const EnvironmentConfig = {
 const ApiConfig = {
     signUp: 'S001',
     signIn: 'S002',
+    examinationPaper: 'S003',
+    queryExaminationPaper: 'S004'
 };
 
 // 环境定义

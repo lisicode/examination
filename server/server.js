@@ -65,7 +65,6 @@ http.createServer((req, res) => {
                                     res.end(JSON.stringify(sendData));
                                 }
                             });
-
                         }
                     }
                 });
@@ -105,8 +104,45 @@ http.createServer((req, res) => {
                         }
                     }
                 });
-                break
+                break;
+            case 'S003':
+                let examination = `INSERT INTO question(account, questions) VALUES ('${data.account}', '${JSON.stringify(data.examination)}')`;
+                connection().query(examination, (err, result) => {
+                    if (err) {
+                        console.log('[SELECT ERROR] - ',err.message);
+                        let sendData = {
+                            status: '0001',
+                            msg: '考卷生成失败'
+                        };
+                        res.end(JSON.stringify(sendData));
+                        return false;
+                    } else {
+                        let sendData = {
+                            status: '0000',
+                            msg: '考卷已生成'
+                        };
+                        res.end(JSON.stringify(sendData));
+                    }
+                });
 
+
+
+                break;
+            case 'S004':
+                let queryExaminationPaper = `SELECT * FROM question WHERE account LIKE ${data.account}`;
+                connection().query(queryExaminationPaper, (err, result) => {
+                    if (err) {
+                        console.log('[SELECT ERROR] - ',err.message);
+                        return false;
+                    } else {
+                        let sendData = {
+                            status: '0000',
+                            examinationPaperData: result
+                        };
+                        res.end(JSON.stringify(sendData));
+                    }
+                });
+                break;
         }
     });
 }).listen(8080);

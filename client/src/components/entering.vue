@@ -17,11 +17,11 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="add" plain>增加备选项</el-button>
-        <el-button type="primary" @click="onSubmit">配置</el-button>
+        <el-button type="primary" @click="submitQuestion">生成题目</el-button>
       </el-form-item>
     </el-form>
 
-    <el-card class="box-card" v-for="(i, index) in item" shadow="never">
+    <el-card class="box-card" v-for="(i, index) in examination" shadow="never">
       <div slot="header">
         <span>{{ i.topic }}</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="removeExamination(index)">删除</el-button>
@@ -32,7 +32,8 @@
       </div>
     </el-card>
     <footer>
-      <el-button type="primary" @click="add">生成试卷</el-button>
+      <el-button type="primary" @click="submitExamination">生成试卷</el-button>
+      <el-button type="primary" @click="preview">预览</el-button>
     </footer>
 
   </div>
@@ -49,8 +50,7 @@ export default {
         topic: '',
         list: [],
       },
-      item: []
-
+      examination: []
     }
   },
   created() {
@@ -64,14 +64,37 @@ export default {
     removeQuestion(e) {
       this.question.list.splice(e,1)
     },
-    onSubmit() {
+    submitQuestion() {
       let obj = JSON.parse(JSON.stringify(this.question));
-      this.item.push(obj);
-      console.log(this.item)
+      this.examination.push(obj);
+      console.log(this.examination)
     },
     removeExamination(e) {
-      this.item.splice(e,1)
+      this.examination.splice(e,1)
     },
+    submitExamination() {
+      Request({
+        method: 'post',
+        data: {
+          api: ApiConfig.examinationPaper,
+          account: GetLocalStorage('userData').account,
+          examination: this.examination
+        }
+      }).then(res => {
+        console.log(res)
+      })
+    },
+    preview() {
+      Request({
+        method: 'post',
+        data: {
+          api: ApiConfig.queryExaminationPaper,
+          account: GetLocalStorage('userData').account,
+        }
+      }).then(res => {
+        console.log(JSON.parse(res.examinationPaperData[0].questions))
+      })
+    }
 
   }
 }
