@@ -69,7 +69,7 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
         ],
         department: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请选择部门', trigger: 'change' }
         ],
         role: [
           { required: true, message: '请选择角色', trigger: 'change' }
