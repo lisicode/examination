@@ -25,6 +25,7 @@ const connection = () => {
 };
 
 http.createServer((req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
     req.on('data', (e) => {
         let data = JSON.parse(e.toString());
         switch (data.api) {
