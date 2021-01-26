@@ -21,7 +21,7 @@
       </el-form-item>
     </el-form>
 
-    <el-row v-if="examination != []">
+    <el-row v-if="examination.length">
       <el-card class="box-card" v-for="(i, index) in examination" shadow="never">
         <div slot="header">
           <span>{{ i.topic }}</span>
@@ -34,14 +34,22 @@
       </el-card>
       <el-row>
         <el-col :span="24">
-          <el-button type="primary" @click="submitExamination">生成试卷</el-button>
-          <el-button type="primary" @click="preview">预览</el-button>
+          <el-button type="primary" @click="dialogVisible = true">生成试卷</el-button>
         </el-col>
       </el-row>
     </el-row>
 
-
-
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="50%">
+      <el-form :model="examinationData" :rules="rules" ref="examinationData">
+        <el-form-item prop="name">
+          <el-input v-model="examinationData.name" placeholder="请为试卷命名"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitExamination('examinationData')">提交</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -57,16 +65,15 @@ export default {
         list: [{option: ''},{option: ''}],
       },
       rules: {
-        type: [
-          { required: true, message: '请选择题目类型', trigger: 'change' },
-        ],
-        topic: [
-          { required: true, message: '请输入题目', trigger: 'blur' },
-        ]
+        type: [{ required: true, message: '请选择题目类型', trigger: 'change' },],
+        topic: [{ required: true, message: '请输入题目', trigger: 'blur' },],
+        name: [{ required: true, message: '请为试卷命名', trigger: 'blur' },],
       },
-
+      dialogVisible: false,
       examination: [],
-
+      examinationData: {
+        name: ''
+      },
     }
   },
   created() {
@@ -94,30 +101,26 @@ export default {
     removeExamination(e) {
       this.examination.splice(e,1)
     },
-    submitExamination() {
-      Request({
-        method: 'post',
-        data: {
-          api: ApiConfig.examinationPaper,
-          account: GetLocalStorage('userData').account,
-          examination: this.examination
+    submitExamination(examinationData) {
+      this.$refs[examinationData].validate((valid) => {
+        if (valid) {
+          this.dialogVisible = false;
+          Request({
+            method: 'post',
+            data: {
+              api: ApiConfig.examinationPaper,
+              account: GetLocalStorage('userData').account,
+              name: this.examinationData.name,
+              examination: this.examination
+            }
+          }).then(res => {
+            console.log(res)
+          })
+        } else {
+          return false;
         }
-      }).then(res => {
-        console.log(res)
-      })
+      });
     },
-    preview() {
-      Request({
-        method: 'post',
-        data: {
-          api: ApiConfig.queryExaminationPaper,
-          account: GetLocalStorage('userData').account,
-        }
-      }).then(res => {
-        console.log(JSON.parse(res.examinationPaperData[0].questions))
-      })
-    }
-
   }
 }
 </script>
@@ -132,7 +135,6 @@ export default {
     .text {
       font-size: 14px;
     }
-
     .item {
       margin-bottom: 18px;
     }

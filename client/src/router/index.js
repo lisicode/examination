@@ -21,6 +21,10 @@ const routes = [
         component: () => import(/* webpackChunkName: "entering" */ '../components/entering.vue')
       },
       {
+        path:'/list',
+        component: () => import(/* webpackChunkName: "list" */ '../components/list.vue')
+      },
+      {
         path:'/statistics',
         component: () => import(/* webpackChunkName: "statistics" */ '../components/statistics.vue')
       }

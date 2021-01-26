@@ -4,6 +4,7 @@
       <el-header>
         <el-menu :default-active="$route.path" mode="horizontal" :router='true'>
           <el-menu-item index="/examiner">试卷配置</el-menu-item>
+          <el-menu-item index="/list">我的试卷</el-menu-item>
           <el-menu-item index="/statistics">成绩统计</el-menu-item>
         </el-menu>
       </el-header>
