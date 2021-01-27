@@ -8,7 +8,7 @@
           label="账号">
       </el-table-column>
       <el-table-column
-          prop="name"
+          prop="title"
           label="试卷名">
       </el-table-column>
       <el-table-column
@@ -19,29 +19,17 @@
         </template>
       </el-table-column>
     </el-table>
-
-
     <el-form>
-      <p>{{ name }}</p>
-
-      <el-form-item v-for="i in this.answer" v-if="i.type === '01'">
-        <p>{{ i.topic }}</p>
-        <el-radio-group v-model="i.ra">
-          <el-radio v-for="o in i.list" :label="o.option"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-
-      <el-form-item v-for="(i, fIndex) in this.answer" v-if="i.type === '02'">
-        <p>{{ i.topic }}</p>
-        <el-checkbox v-for="(o, cIndex) in i.list" :label="o.option" @change="ch(fIndex, cIndex)"></el-checkbox>
-      </el-form-item>
-
-
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">发布</el-button>
-      </el-form-item>
+      <p>{{ title }}</p>
     </el-form>
+
+
+    <el-checkbox-group v-for="i in form" v-model="i.values">
+      <el-checkbox v-for="city in i.cityList" :label="city.value">{{city.label}}</el-checkbox>
+    </el-checkbox-group>
+
+    <el-button @click="onSubmit">提交</el-button>
+
 
 
   </div>
@@ -53,9 +41,40 @@ export default {
   data() {
     return {
       tableData: [],
-      name: '',
+      title: '',
 
-      answer: [],
+      form: [
+        {
+          values: [],
+          cityList: [
+            {
+              label: '广州',
+              value: 1
+            },
+            {
+              label: '北京',
+              value: 2
+            }
+          ]
+        },
+        {
+          values: [],
+          cityList: [
+            {
+              label: '杭州',
+              value: 1
+            },
+            {
+              label: '南京',
+              value: 2
+            }
+          ]
+        }
+
+      ]
+
+
+
     };
   },
   created() {
@@ -71,19 +90,12 @@ export default {
   },
   methods: {
     handleClick(row) {
-      this.name = row.name;
-      this.answer = JSON.parse(row.questions);
-      console.log(this.answer)
-    },
-
-
-    ch(fIndex, cIndex) {
-      console.log('第' + fIndex + '题')
-      console.log('选择第' + cIndex)
+      this.title = row.title;
+      console.log(JSON.parse(row.questions))
     },
 
     onSubmit() {
-      console.log(this.answer)
+      console.log(this.form);
     }
   }
 }

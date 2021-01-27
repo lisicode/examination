@@ -41,8 +41,8 @@
 
     <el-dialog title="提示" :visible.sync="dialogVisible" width="50%">
       <el-form :model="examinationData" :rules="rules" ref="examinationData">
-        <el-form-item prop="name">
-          <el-input v-model="examinationData.name" placeholder="请为试卷命名"></el-input>
+        <el-form-item prop="title">
+          <el-input v-model="examinationData.title" placeholder="请为试卷命名"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -67,12 +67,12 @@ export default {
       rules: {
         type: [{ required: true, message: '请选择题目类型', trigger: 'change' },],
         topic: [{ required: true, message: '请输入题目', trigger: 'blur' },],
-        name: [{ required: true, message: '请为试卷命名', trigger: 'blur' },],
+        title: [{ required: true, message: '请为试卷命名', trigger: 'blur' },],
       },
       dialogVisible: false,
       examination: [],
       examinationData: {
-        name: ''
+        title: ''
       },
     }
   },
@@ -110,7 +110,7 @@ export default {
             data: {
               api: ApiConfig.examinationPaper,
               account: GetLocalStorage('userData').account,
-              name: this.examinationData.name,
+              title: this.examinationData.title,
               examination: this.examination
             }
           }).then(res => {

@@ -107,7 +107,7 @@ http.createServer((req, res) => {
                 });
                 break;
             case 'S003':
-                let examination = `INSERT INTO question(account,name, questions) VALUES ('${data.account}','${data.name}', '${JSON.stringify(data.examination)}')`;
+                let examination = `INSERT INTO question(account, title, questions) VALUES ('${data.account}', '${data.title}', '${JSON.stringify(data.examination)}')`;
                 connection().query(examination, (err, result) => {
                     if (err) {
                         console.log('[SELECT ERROR] - ',err.message);
