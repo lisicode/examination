@@ -20,7 +20,6 @@
         <el-button type="primary" @click="submitQuestion('question')">生成题目</el-button>
       </el-form-item>
     </el-form>
-
     <el-row v-if="examination.length">
       <el-card class="box-card" v-for="(i, index) in examination" shadow="never">
         <div slot="header">
@@ -38,7 +37,6 @@
         </el-col>
       </el-row>
     </el-row>
-
     <el-dialog title="提示" :visible.sync="dialogVisible" width="50%">
       <el-form :model="examinationData" :rules="rules" ref="examinationData">
         <el-form-item prop="title">
@@ -54,7 +52,7 @@
 </template>
 
 <script>
-import { Request, ApiConfig, SetLocalStorage, GetLocalStorage } from '@/assets/js/config'
+import { Request, ApiConfig, GetLocalStorage } from '@/assets/js/config'
 export default {
   name: 'entering',
   data() {
@@ -62,6 +60,7 @@ export default {
       question: {
         type: '',
         topic: '',
+        values: [],
         list: [{option: ''},{option: ''}],
       },
       rules: {

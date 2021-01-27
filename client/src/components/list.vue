@@ -19,62 +19,35 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-form>
+    <el-form v-if="form.length">
       <p>{{ title }}</p>
+      <el-form-item v-for="i in form" v-if="i.type === '01'">
+        <p>{{ i.topic }}</p>
+        <el-radio-group v-model="i.values">
+          <el-radio v-for="(o, index) in i.list" :label="index">{{o.option}}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-for="i in form" v-if="i.type === '02'">
+        <p>{{ i.topic }}</p>
+        <el-checkbox-group v-model="i.values">
+          <el-checkbox v-for="(o, index) in i.list" :label="index">{{o.option}}</el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
+      </el-form-item>
     </el-form>
-
-
-    <el-checkbox-group v-for="i in form" v-model="i.values">
-      <el-checkbox v-for="city in i.cityList" :label="city.value">{{city.label}}</el-checkbox>
-    </el-checkbox-group>
-
-    <el-button @click="onSubmit">提交</el-button>
-
-
-
   </div>
 </template>
 <script>
-import { Request, ApiConfig, SetLocalStorage, GetLocalStorage } from '@/assets/js/config'
+import { Request, ApiConfig, GetLocalStorage } from '@/assets/js/config'
 export default {
   name: 'list',
   data() {
     return {
       tableData: [],
       title: '',
-
-      form: [
-        {
-          values: [],
-          cityList: [
-            {
-              label: '广州',
-              value: 1
-            },
-            {
-              label: '北京',
-              value: 2
-            }
-          ]
-        },
-        {
-          values: [],
-          cityList: [
-            {
-              label: '杭州',
-              value: 1
-            },
-            {
-              label: '南京',
-              value: 2
-            }
-          ]
-        }
-
-      ]
-
-
-
+      form: []
     };
   },
   created() {
@@ -91,9 +64,8 @@ export default {
   methods: {
     handleClick(row) {
       this.title = row.title;
-      console.log(JSON.parse(row.questions))
+      this.form = JSON.parse(row.questions);
     },
-
     onSubmit() {
       console.log(this.form);
     }
