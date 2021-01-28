@@ -15,7 +15,8 @@
           fixed="right"
           label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">完善答案</el-button>
+          <el-button type="success" v-if="!scope.answer" @click="handleClick(scope.row)" size="small">完善答案</el-button>
+          <el-tag v-if="scope.answer">已发布</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -47,7 +48,8 @@ export default {
     return {
       tableData: [],
       title: '',
-      form: []
+      form: [],
+      answer: []
     };
   },
   created() {
@@ -67,7 +69,10 @@ export default {
       this.form = JSON.parse(row.questions);
     },
     onSubmit() {
-      console.log(this.form);
+      for (let i in this.form) {
+        this.answer.push(this.form[i].values)
+      }
+      console.log(this.answer)
     }
   }
 }
