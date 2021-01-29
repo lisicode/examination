@@ -15,7 +15,8 @@ const ApiConfig = {
     signUp: 'S001',
     signIn: 'S002',
     examinationPaper: 'S003',
-    queryExaminationPaper: 'S004'
+    queryExaminationPaper: 'S004',
+    EditTheAnswer: 'S005'
 };
 
 // 环境定义

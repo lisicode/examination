@@ -144,6 +144,21 @@ http.createServer((req, res) => {
                     }
                 });
                 break;
+            case "S005":
+                let editTheAnswer = `UPDATE question SET answer = '${JSON.stringify(data.answerData)}' WHERE id = ${data.id}`;
+                connection().query(editTheAnswer, (err, result) => {
+                    if (err) {
+                        console.log('[SELECT ERROR] - ',err.message);
+                        return false;
+                    } else {
+                        let sendData = {
+                            status: '0000',
+                            msg: '发布成功'
+                        };
+                        res.end(JSON.stringify(sendData));
+                    }
+                });
+                break
         }
     });
 }).listen(8080);
