@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="t2">
     <el-table
         :data="tableData"
         style="width: 100%">
@@ -44,7 +44,7 @@
 <script>
 import { Request, ApiConfig, GetLocalStorage } from '@/assets/js/config'
 export default {
-  name: 'list',
+  name: 't2',
   data() {
     return {
       tableData: [],
@@ -60,6 +60,7 @@ export default {
       method: 'post',
       data: {
         api: ApiConfig.queryExaminationPaper,
+        role: GetLocalStorage('userData').role,
         account: GetLocalStorage('userData').account,
       }
     }).then(res => {
@@ -86,7 +87,7 @@ export default {
           api: ApiConfig.EditTheAnswer,
           id: this.id,
           account: GetLocalStorage('userData').account,
-          answerData: this.answer
+          answer: this.answer
         }
       }).then(res => {
         this.answer = [];

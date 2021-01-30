@@ -1,5 +1,5 @@
 <template>
-  <div class="entering">
+  <div class="t1">
     <el-form :model="question" status-icon :rules="rules" ref="question">
       <el-form-item prop="type">
         <el-select v-model="question.type" placeholder="题目类型">
@@ -54,7 +54,7 @@
 <script>
 import { Request, ApiConfig, GetLocalStorage } from '@/assets/js/config'
 export default {
-  name: 'entering',
+  name: 't1',
   data() {
     return {
       question: {
@@ -76,7 +76,6 @@ export default {
     }
   },
   created() {
-    // localStorage.removeItem('userData')
     console.log(GetLocalStorage('userData'))
   },
   methods: {
@@ -109,6 +108,7 @@ export default {
             data: {
               api: ApiConfig.examinationPaper,
               account: GetLocalStorage('userData').account,
+              department: GetLocalStorage('userData').department,
               title: this.examinationData.title,
               examination: this.examination
             }

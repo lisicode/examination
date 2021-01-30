@@ -60,7 +60,8 @@ http.createServer((req, res) => {
                                         userData: {
                                             name: data.signUpData.name,
                                             account: data.signUpData.account,
-                                            role: data.signUpData.role
+                                            role: data.signUpData.role,
+                                            department: data.signUpData.department
                                         }
                                     };
                                     res.end(JSON.stringify(sendData));
@@ -85,7 +86,8 @@ http.createServer((req, res) => {
                                     userData: {
                                         name: result[0].name,
                                         account: result[0].account,
-                                        role: result[0].role
+                                        role: result[0].role,
+                                        department: result[0].department
                                     }
                                 };
                                 res.end(JSON.stringify(sendData));
@@ -107,7 +109,7 @@ http.createServer((req, res) => {
                 });
                 break;
             case 'S003':
-                let examination = `INSERT INTO question(account, title, questions) VALUES ('${data.account}', '${data.title}', '${JSON.stringify(data.examination)}')`;
+                let examination = `INSERT INTO question(account, department, title, questions) VALUES ('${data.account}','${data.department}', '${data.title}', '${JSON.stringify(data.examination)}')`;
                 connection().query(examination, (err, result) => {
                     if (err) {
                         console.log('[SELECT ERROR] - ',err.message);
@@ -130,7 +132,13 @@ http.createServer((req, res) => {
 
                 break;
             case 'S004':
-                let queryExaminationPaper = `SELECT * FROM question WHERE account LIKE ${data.account}`;
+                console.log(data)
+                let queryExaminationPaper;
+                if (data.role === '01') {
+                    queryExaminationPaper = `SELECT * FROM question WHERE account LIKE ${data.account}`;
+                } else if (data.role === '02') {
+                    queryExaminationPaper = `SELECT * FROM question WHERE department LIKE '${data.department}'`;
+                }
                 connection().query(queryExaminationPaper, (err, result) => {
                     if (err) {
                         console.log('[SELECT ERROR] - ',err.message);
@@ -145,17 +153,33 @@ http.createServer((req, res) => {
                 });
                 break;
             case "S005":
-                let editTheAnswer = `UPDATE question SET answer = '${JSON.stringify(data.answerData)}' WHERE id = ${data.id}`;
+                let editTheAnswer = `UPDATE answer SET answer = '${JSON.stringify(data.answer)}' WHERE id = ${data.id}`;
                 connection().query(editTheAnswer, (err, result) => {
                     if (err) {
                         console.log('[SELECT ERROR] - ',err.message);
                         return false;
                     } else {
-                        let sendData = {
-                            status: '0000',
-                            msg: '发布成功'
-                        };
-                        res.end(JSON.stringify(sendData));
+                        if (result.changedRows) {
+                            let sendData = {
+                                status: '0000',
+                                msg: '发布成功'
+                            };
+                            res.end(JSON.stringify(sendData));
+                        } else {
+                            let insertAnswer = `INSERT INTO answer(id, answer) VALUES ('${data.id}', '${JSON.stringify(data.answer)}')`;
+                            connection().query(insertAnswer, (err, result) => {
+                                if (err) {
+                                    console.log('[SELECT ERROR] - ',err.message);
+                                    return false;
+                                } else {
+                                    let sendData = {
+                                        status: '0000',
+                                        msg: '发布成功'
+                                    };
+                                    res.end(JSON.stringify(sendData));
+                                }
+                            });
+                        }
                     }
                 });
                 break

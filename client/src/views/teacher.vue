@@ -1,11 +1,11 @@
 <template>
-  <div class="examiner">
+  <div class="teacher">
     <el-container>
       <el-header>
         <el-menu :default-active="$route.path" mode="horizontal" :router='true'>
-          <el-menu-item index="/examiner">试卷配置</el-menu-item>
-          <el-menu-item index="/list">我的试卷</el-menu-item>
-          <el-menu-item index="/statistics">成绩统计</el-menu-item>
+          <el-menu-item index="/teacher">试卷配置</el-menu-item>
+          <el-menu-item index="/t2">我的试卷</el-menu-item>
+          <el-menu-item index="/t3">成绩统计</el-menu-item>
           <el-submenu index="1" style="float: right">
             <template slot="title">{{ userName }}</template>
             <el-menu-item index="2-1" @click="signOut">退出登录</el-menu-item>
@@ -20,24 +20,20 @@
 </template>
 
 <script>
-import { Request, ApiConfig, SetLocalStorage, GetLocalStorage } from '@/assets/js/config'
+import { GetLocalStorage } from '@/assets/js/config'
 export default {
-  name: 'examiner',
+  name: 'teacher',
   data() {
     return {
-      activeIndex: '/',
       userName: GetLocalStorage('userData').name
     };
   },
   created() {
 
   },
-  mounted() {
-
-  },
   methods: {
     signOut() {
-      localStorage.removeItem('userData')
+      localStorage.removeItem('userData');
       this.$router.push('/')
     }
   }

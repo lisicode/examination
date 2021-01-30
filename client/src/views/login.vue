@@ -100,9 +100,9 @@
               if (res.status === '0000') {
                 SetLocalStorage(res.userData, 'userData');
                 if (res.userData.role === '01') {
-                  this.$router.push('/examiner')
+                  this.$router.push('/teacher')
                 } else if (res.userData.role === '02') {
-                  this.$router.push('/home')
+                  this.$router.push('/student')
                 }
               }
             })
@@ -124,9 +124,9 @@
               if (res.status === '0000') {
                 SetLocalStorage(res.userData, 'userData');
                 if (res.userData.role === '01') {
-                  this.$router.push('/examiner')
+                  this.$router.push('/teacher')
                 } else if (res.userData.role === '02') {
-                  this.$router.push('/')
+                  this.$router.push('/student')
                 }
               }
             })
