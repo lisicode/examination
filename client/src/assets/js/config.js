@@ -12,11 +12,11 @@ const EnvironmentConfig = {
 
 // 接口编号
 const ApiConfig = {
-    signUp: 'S001',
-    signIn: 'S002',
-    examinationPaper: 'S003',
-    queryExaminationPaper: 'S004',
-    EditTheAnswer: 'S005'
+    signUp: 'T001',
+    signIn: 'T002',
+    examinationPaper: 'T003',
+    queryExaminationPaper: 'T004',
+    EditTheAnswer: 'T005'
 };
 
 // 环境定义

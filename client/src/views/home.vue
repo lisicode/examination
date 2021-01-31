@@ -1,5 +1,5 @@
 <template>
-  <div class="teacher">
+  <div class="home">
     <el-container>
       <el-header>
         <el-menu :default-active="$route.path" mode="horizontal" :router='true'>
@@ -22,7 +22,7 @@
 <script>
 import { GetLocalStorage } from '@/assets/js/config'
 export default {
-  name: 'teacher',
+  name: 'home',
   data() {
     return {
       userName: GetLocalStorage('userData').name

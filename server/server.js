@@ -29,9 +29,9 @@ http.createServer((req, res) => {
   req.on('data', (e) => {
     let data = JSON.parse(e.toString());
     switch (data.api) {
-      case 'S001':
+      case 'T001':
         let querySignUpAccount = `SELECT * FROM user WHERE account LIKE ${data.signUpData.account}`;
-        let signUpAccount = `INSERT INTO user(name, account, password, department, role) VALUES ('${data.signUpData.name}', '${data.signUpData.account}', '${md5(data.signUpData.password)}', '${data.signUpData.department}', '${data.signUpData.role}')`;
+        let signUpAccount = `INSERT INTO user(name, account, password, department) VALUES ('${data.signUpData.name}', '${data.signUpData.account}', '${md5(data.signUpData.password)}', '${data.signUpData.department}')`;
         connection().query(querySignUpAccount, (err, result) => {
           if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -60,7 +60,6 @@ http.createServer((req, res) => {
                     userData: {
                       name: data.signUpData.name,
                       account: data.signUpData.account,
-                      role: data.signUpData.role,
                       department: data.signUpData.department
                     }
                   };
@@ -71,7 +70,7 @@ http.createServer((req, res) => {
           }
         });
         break;
-      case 'S002':
+      case 'T002':
         let querySignInAccount = `SELECT * FROM user WHERE account LIKE ${data.signInData.account}`;
         connection().query(querySignInAccount, (err, result) => {
           if (err) {
@@ -86,7 +85,6 @@ http.createServer((req, res) => {
                   userData: {
                     name: result[0].name,
                     account: result[0].account,
-                    role: result[0].role,
                     department: result[0].department
                   }
                 };
@@ -108,7 +106,7 @@ http.createServer((req, res) => {
           }
         });
         break;
-      case 'S003':
+      case 'T003':
         let examination = `INSERT INTO question(account, department, title, questions) VALUES ('${data.account}','${data.department}', '${data.title}', '${JSON.stringify(data.examination)}')`;
         connection().query(examination, (err, result) => {
           if (err) {
@@ -128,13 +126,8 @@ http.createServer((req, res) => {
           }
         });
         break;
-      case 'S004':
-        let queryExaminationPaper;
-        if (data.role === '01') {
-          queryExaminationPaper = `SELECT * FROM question WHERE account LIKE ${data.account}`;
-        } else if (data.role === '02') {
-          queryExaminationPaper = `SELECT * FROM question WHERE department LIKE '${data.department}'`;
-        }
+      case 'T004':
+        let queryExaminationPaper = `SELECT * FROM question WHERE account LIKE ${data.account}`;
         connection().query(queryExaminationPaper, (err, result) => {
           if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -148,7 +141,7 @@ http.createServer((req, res) => {
           }
         });
         break;
-      case "S005":
+      case "T005":
         let editTheAnswer = `UPDATE answer SET answer = '${JSON.stringify(data.answer)}' WHERE id = ${data.id}`;
         connection().query(editTheAnswer, (err, result) => {
           if (err) {
