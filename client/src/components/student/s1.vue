@@ -19,6 +19,29 @@
         </template>
       </el-table-column>
     </el-table>
+
+
+      <el-form>
+          <h1>{{ title }}</h1>
+          <el-form-item v-for="i in questions" v-if="i.type === '01'">
+              <h3>{{ i.topic }}</h3>
+              <el-radio-group v-model="i.values">
+                  <el-radio v-for="(o, index) in i.list" :label="index">{{o.option}}</el-radio>
+              </el-radio-group>
+          </el-form-item>
+          <el-form-item v-for="i in questions" v-if="i.type === '02'">
+              <h3>{{ i.topic }}</h3>
+              <el-checkbox-group v-model="i.values">
+                  <el-checkbox v-for="(o, index) in i.list" :label="index">{{o.option}}</el-checkbox>
+              </el-checkbox-group>
+          </el-form-item>
+          <el-form-item>
+              <el-button type="primary" @click="onSubmit">提交</el-button>
+          </el-form-item>
+      </el-form>
+
+
+
   </div>
 </template>
 
@@ -28,7 +51,13 @@
     name: 's1',
     data() {
       return {
-        tableData: []
+        tableData: [],
+        title: '',
+        questions: [],
+        answer: [],
+        id: 0
+
+
       };
     },
     created() {
@@ -48,8 +77,22 @@
     },
     methods: {
       begin(row) {
-        console.log(row)
-      }
+        this.questions = JSON.parse(row.questions);
+        this.title = row.title;
+        this.id = row.id;
+      },
+      onSubmit() {
+        for (let i in this.questions) {
+          if (JSON.stringify(this.questions[i].values) === '[]') {
+            return false
+          }
+          this.answer.push(this.questions[i].values)
+        }
+
+        console.log( this.id)
+        console.log( this.answer)
+      },
+
     }
   }
 </script>
