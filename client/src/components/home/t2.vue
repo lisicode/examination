@@ -42,7 +42,8 @@
   </div>
 </template>
 <script>
-import { Request, ApiConfig, GetLocalStorage } from '@/assets/js/config'
+import {Request, ApiConfig, GetLocalStorage} from '@/assets/js/config'
+
 export default {
   name: 't2',
   data() {

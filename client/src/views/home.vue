@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import { GetLocalStorage } from '@/assets/js/config'
+import {GetLocalStorage} from '@/assets/js/config'
+
 export default {
   name: 'home',
   data() {

@@ -2,21 +2,21 @@ import axios from 'axios';
 
 // 环境
 const EnvironmentConfig = {
-    'UAT': {
-        url: '/api',
-    },
-    'PROD': {
-        url: '',
-    }
+  'UAT': {
+    url: '/api',
+  },
+  'PROD': {
+    url: '',
+  }
 };
 
 // 接口编号
 const ApiConfig = {
-    signUp: 'T001',
-    signIn: 'T002',
-    examinationPaper: 'T003',
-    queryExaminationPaper: 'T004',
-    EditTheAnswer: 'T005'
+  signUp: 'T001',
+  signIn: 'T002',
+  examinationPaper: 'T003',
+  queryExaminationPaper: 'T004',
+  EditTheAnswer: 'T005'
 };
 
 // 环境定义
@@ -24,31 +24,31 @@ const Environment = EnvironmentConfig['UAT'];
 
 // 公共方法
 const SetLocalStorage = (data, name) => {
-    data = JSON.stringify(data);
-    localStorage.setItem(name, data);
+  data = JSON.stringify(data);
+  localStorage.setItem(name, data);
 };
 
 const GetLocalStorage = (name) => {
-    return JSON.parse(localStorage.getItem(name));
+  return JSON.parse(localStorage.getItem(name));
 };
 
 // 创建请求实例
 const Request = axios.create({
-    timeout: 7000,
-    baseURL: Environment.url,
-    headers: {'Content-Type': 'application/json'}
+  timeout: 7000,
+  baseURL: Environment.url,
+  headers: {'Content-Type': 'application/json'}
 });
 
 // 添加请求拦截器
 Request.interceptors.request.use(config => {
-    return config
+  return config
 });
 
 // 添加响应拦截器
 Request.interceptors.response.use(response => {
-    return response.data
+  return response.data
 }, error => {
-    console.log(error)
+  console.log(error)
 });
 
-export { ApiConfig, Request, SetLocalStorage, GetLocalStorage }
+export {ApiConfig, Request, SetLocalStorage, GetLocalStorage}

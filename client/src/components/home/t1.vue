@@ -10,7 +10,8 @@
       <el-form-item prop="topic">
         <el-input v-model="question.topic" placeholder="请输入题目"></el-input>
       </el-form-item>
-      <el-form-item v-for="(i, index) in question.list" :prop="'list.' + index + '.option'" :rules="{required: true, message: '请输入题目', trigger: 'blur'}">
+      <el-form-item v-for="(i, index) in question.list" :prop="'list.' + index + '.option'"
+                    :rules="{required: true, message: '请输入题目', trigger: 'blur'}">
         <el-input placeholder="请输入备选项" v-model="i.option">
           <el-button slot="append" :disabled="index < 2" @click="removeQuestion(index)">删除</el-button>
         </el-input>
@@ -52,7 +53,8 @@
 </template>
 
 <script>
-import { Request, ApiConfig, GetLocalStorage } from '@/assets/js/config'
+import {Request, ApiConfig, GetLocalStorage} from '@/assets/js/config'
+
 export default {
   name: 't1',
   data() {
@@ -61,12 +63,12 @@ export default {
         type: '',
         topic: '',
         values: [],
-        list: [{option: ''},{option: ''}],
+        list: [{option: ''}, {option: ''}],
       },
       rules: {
-        type: [{ required: true, message: '请选择题目类型', trigger: 'change' },],
-        topic: [{ required: true, message: '请输入题目', trigger: 'blur' },],
-        title: [{ required: true, message: '请为试卷命名', trigger: 'blur' },],
+        type: [{required: true, message: '请选择题目类型', trigger: 'change'},],
+        topic: [{required: true, message: '请输入题目', trigger: 'blur'},],
+        title: [{required: true, message: '请为试卷命名', trigger: 'blur'},],
       },
       dialogVisible: false,
       examination: [],
@@ -83,7 +85,7 @@ export default {
       this.question.list.push({option: ''})
     },
     removeQuestion(e) {
-      this.question.list.splice(e,1)
+      this.question.list.splice(e, 1)
     },
     submitQuestion(question) {
       this.$refs[question].validate((valid) => {
@@ -97,7 +99,7 @@ export default {
       });
     },
     removeExamination(e) {
-      this.examination.splice(e,1)
+      this.examination.splice(e, 1)
     },
     submitExamination(examinationData) {
       this.$refs[examinationData].validate((valid) => {
@@ -125,18 +127,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .el-select {
-    width: 100%;
+.el-select {
+  width: 100%;
+}
+
+.box-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .text {
+    font-size: 14px;
   }
-  .box-card {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    .text {
-      font-size: 14px;
-    }
-    .item {
-      margin-bottom: 18px;
-    }
+
+  .item {
+    margin-bottom: 18px;
   }
+}
 
 </style>
