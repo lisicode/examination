@@ -2,7 +2,6 @@
     <div class="login">
         <el-menu
                 :default-active="$route.path"
-                background-color="#F7F7F7"
                 mode="horizontal"
                 :router='true'
         >
