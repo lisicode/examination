@@ -1,123 +1,70 @@
 <template>
-  <div class="login">
-    <el-form :model="signInData" status-icon :rules="rules" ref="signInData">
-      <el-form-item prop="account">
-        <el-input v-model="signInData.account" placeholder="请输入账号"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="signInData.password" placeholder="请输入密码" show-password></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="signIn('signInData')">登 录</el-button>
-      </el-form-item>
-    </el-form>
-    <el-form :model="signUpData" status-icon :rules="rules" ref="signUpData">
-      <el-form-item prop="name">
-        <el-input v-model="signUpData.name" placeholder="请输入姓名"></el-input>
-      </el-form-item>
-      <el-form-item prop="account">
-        <el-input v-model="signUpData.account" placeholder="请输入账号"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="signUpData.password" placeholder="请输入密码" show-password></el-input>
-      </el-form-item>
-      <el-form-item prop="department">
-        <el-select v-model="signUpData.department" placeholder="请选择部门">
-          <el-option label="互联网金融业务部" value="01"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="signUp('signUpData')">注 册</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+    <div class="login">
+        <el-menu
+                :default-active="$route.path"
+                background-color="#F7F7F7"
+                mode="horizontal"
+                :router='true'
+        >
+            <el-menu-item index="/">登录</el-menu-item>
+            <el-menu-item index="/s2">注册</el-menu-item>
+        </el-menu>
+        <el-row type="flex" justify="center">
+            <el-col :xs="20" :md="6">
+                <el-card shadow="never">
+                    <h1>问卷宝管理系统</h1>
+                    <router-view></router-view>
+                </el-card>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
-import {Request, ApiConfig, SetLocalStorage} from '@/assets/js/config'
-
-export default {
-  name: 'login',
-  data() {
-    return {
-      signInData: {
-        account: '',
-        password: ''
-      },
-      signUpData: {
-        name: '',
-        account: '',
-        password: '',
-        department: '',
-      },
-      rules: {
-        name: [
-          {required: true, message: '请输入账号', trigger: 'blur'},
-        ],
-        account: [
-          {required: true, message: '请输入账号', trigger: 'blur'},
-        ],
-        password: [
-          {required: true, message: '请输入密码', trigger: 'blur'},
-        ],
-        department: [
-          {required: true, message: '请选择部门', trigger: 'change'}
-        ]
-      }
-    }
-  },
-  methods: {
-    signUp(signUpData) {
-      this.$refs[signUpData].validate((valid) => {
-        if (valid) {
-          Request({
-            method: 'post',
-            data: {
-              api: ApiConfig.signUp,
-              signUpData: this.signUpData
-            }
-          }).then(res => {
-            if (res.status === '0000') {
-              SetLocalStorage(res.userData, 'userData');
-              this.$router.push('/home')
-            }
-          })
-        } else {
-          return false;
-        }
-      });
+  export default {
+    name: 'login',
+    data() {
+      return {}
     },
-    signIn(signInData) {
-      this.$refs[signInData].validate((valid) => {
-        if (valid) {
-          Request({
-            method: 'post',
-            data: {
-              api: ApiConfig.signIn,
-              signInData: this.signInData
-            }
-          }).then(res => {
-            if (res.status === '0000') {
-              SetLocalStorage(res.userData, 'userData');
-              this.$router.push('/home')
-            }
-          })
-        } else {
-          return false;
-        }
-      });
-    },
+    methods: {}
   }
-}
 </script>
 <style lang="scss" scoped>
-.el-button {
-  width: 100%;
-}
+    .login {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background-color: #F7F7F7;
 
-.el-select {
-  width: 100%;
-}
+        .el-menu {
+            box-sizing: border-box;
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            border: none;
+        }
 
+        .el-row {
+            width: 100%;
+
+            .el-col {
+                margin-top: 150px;
+
+                .el-card {
+                    border: none;
+                    background-color: #F7F7F7;
+
+                    h1 {
+                        color: #303133;
+                        letter-spacing: 5px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
 </style>
 

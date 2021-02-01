@@ -10,6 +10,16 @@ const routes = [
     path: '/',
     name: 'login',
     component: login,
+    children:[
+      {
+        path:'',
+        component: () => import(/* webpackChunkName: "s1" */ '../components/login/s1.vue')
+      },
+      {
+        path:'/s2',
+        component: () => import(/* webpackChunkName: "s2" */ '../components/login/s2.vue')
+      }
+    ]
   },
   {
     path: '/home',
