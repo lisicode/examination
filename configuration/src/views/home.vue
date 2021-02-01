@@ -13,7 +13,6 @@
                 </el-menu>
             </el-header>
             <el-main>
-                <h1>问卷宝系统平台</h1>
                 <router-view></router-view>
             </el-main>
         </el-container>
