@@ -1,8 +1,6 @@
 <template>
     <div class="t2">
-        <el-table
-                :data="tableData"
-                style="width: 100%">
+        <el-table :data="tableData">
             <el-table-column
                     prop="id"
                     label="试卷编号">
@@ -61,7 +59,6 @@
         method: 'post',
         data: {
           api: ApiConfig.queryExaminationPaper,
-          role: GetLocalStorage('userData').role,
           account: GetLocalStorage('userData').account,
         }
       }).then(res => {
