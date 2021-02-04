@@ -1,8 +1,18 @@
 <template>
   <div class="t1">
+    <el-button type="primary" plain @click="dialogFormVisible = true">新增题目</el-button>
+    <el-button type="primary" :disabled="examination.length === 0" @click="dialogVisible = true">生成试卷</el-button>
     <el-table stripe :data="examination">
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p v-for="o in props.row.list">
+            <el-tag type="danger">备选：</el-tag>
+            <el-tag>{{ o.option }}</el-tag>
+          </p>
+        </template>
+      </el-table-column>
       <el-table-column
-          label="题目类型"
+          label="类型"
           prop="type">
         <template slot-scope="scope">
           <el-tag :type="scope.row.type === '01' ? 'primary' : 'success'">{{ scope.row.type==='01' ? '单选题' : '多选题' }}</el-tag>
@@ -12,20 +22,9 @@
           label="题目"
           prop="topic">
       </el-table-column>
-      <el-table-column>
-        <template slot="header" slot-scope="scope">
-          <el-button type="primary" plain @click="dialogFormVisible = true">新增题目</el-button>
-          <el-button type="primary" :disabled="examination.length === 0" @click="dialogVisible = true">生成试卷</el-button>
-        </template>
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" type="danger" @click="removeExamination(scope.$index)">删除</el-button>
-        </template>
-      </el-table-column>
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form v-for="o in props.row.list" label-position="left" inline>
-            <el-form-item label="备选项">{{ o.option }}</el-form-item>
-          </el-form>
         </template>
       </el-table-column>
     </el-table>
@@ -145,6 +144,14 @@ export default {
 .el-form {
   .el-select {
     width: 100%;
+  }
+}
+.el-table {
+  margin-top: 20px;
+  p {
+    .el-tag {
+      margin: 5px;
+    }
   }
 }
 

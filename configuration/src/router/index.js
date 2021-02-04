@@ -33,10 +33,6 @@ const routes = [
       {
         path:'/t2',
         component: () => import(/* webpackChunkName: "t2" */ '../components/home/t2.vue')
-      },
-      {
-        path:'/t3',
-        component: () => import(/* webpackChunkName: "t3" */ '../components/home/t3.vue')
       }
     ]
   }
